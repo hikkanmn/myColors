@@ -2,24 +2,18 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+}
+
+body {
     background-color: rgb(28, 28, 28);
 }
 
 .container {
     width: 1000px;
-    margin: 0 auto;
-}
-
-.name {
-    color: azure;
-    font-size: larger;
-    text-align: center;
+    margin: 30px auto;
     padding: 10px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.block:hover {
-    cursor: pointer;
+    border-radius: 15px;
+    background-color: rgb(46, 45, 45);
 }
 
 .blockContainer {
@@ -28,8 +22,28 @@
     grid-template-rows: 100px 50px;
     padding: 10px;
 }
+.name {
+    color: azure;
+    font-size: larger;
+    text-align: center;
+    padding: 10px;
+    margin: 0 5px;
+    background-color: rgb(30, 30, 30);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 0 0 15px 15px;
+}
+
+.block:hover {
+    cursor: pointer;
+}
+
+.block {
+    margin: 5px 5px 0 5px;
+    border-radius: 15px 15px 0 0;
+}
 
 .mainContainer {
+    margin: 0 5px;
     display: grid;
     grid-template-columns: repeat(3, 3fr);
     grid-template-rows: repeat(2, 200px);
