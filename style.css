@@ -2,29 +2,57 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    background-color: rgb(28, 28, 28);
 }
 
 .container {
-    width: 600px;
-    height: 400px;
+    width: 1000px;
     margin: 0 auto;
-    background-color:cornflowerblue;
-    display: flex;
-    justify-content: center;
 }
 
-.mainColor {
-    width: 100px;
-    height: 300px;
-    
+.name {
+    color: azure;
+    font-size: larger;
+    text-align: center;
+    padding: 10px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.block:hover {
+    cursor: pointer;
 }
 
 .blockContainer {
-    
+    display: grid;
+    grid-template-columns: repeat(5, 5fr);
+    grid-template-rows: 100px 50px;
+    padding: 10px;
 }
 
-.block1 {
-    width: 100px;
-    height: 150px;
+.mainContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 3fr);
+    grid-template-rows: repeat(2, 200px);
+    padding: 10px;
+}
 
+.mainColor {
+    grid-column-start: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background-color: transparent;
+}
+
+/*стиль для инпута*/
+input {
+    border: 0;
+    outline: none;
+    border-color: transparent;
+}
+
+input[type="color" i]::-webkit-color-swatch-wrapper {
+    padding: 0;
 }
