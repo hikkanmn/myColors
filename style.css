@@ -1,0 +1,30 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
+    background-color:cornflowerblue;
+    display: flex;
+    justify-content: center;
+}
+
+.mainColor {
+    width: 100px;
+    height: 300px;
+    
+}
+
+.blockContainer {
+    
+}
+
+.block1 {
+    width: 100px;
+    height: 150px;
+
+}
