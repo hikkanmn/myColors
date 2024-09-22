@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-    width: 1000px;
+    max-width: 1000px;
     margin: 30px auto;
     padding: 10px;
     border-radius: 15px;
@@ -61,7 +61,7 @@ body {
 }
 
 /*стиль для инпута*/
-input {
+input[type="color" i] {
     border: 0;
     outline: none;
     border-color: transparent;

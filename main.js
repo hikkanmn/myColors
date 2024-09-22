@@ -20,62 +20,36 @@ const color4 = document.querySelector('.palette4_js')
 function hexToRgbValue(hex, x, y, z)
 {
     hex = hex.replace(/^#/, '');
-
     const r = parseInt(hex.substring(0, 2), 16);
     const g = parseInt(hex.substring(2, 4), 16);
     const b = parseInt(hex.substring(4, 6), 16);
-
     return "rgb(" +  (r+x) + "," + (g+y) + "," + (b+z) + ")";
 }
 
 //функция подписи цветов в палетке
-function colorDescription(main, c1, c2, c3, c4) {
-    let a = hexToRgbValue(main.value, 46, 53, 43);
-    let b = hexToRgbValue(main.value, -18, 28, -42);
-    let c = hexToRgbValue(main.value, 60, 93, 43);
-    let d = hexToRgbValue(main.value, -41, -6, -59);
-    let f = hexToRgbValue(main.value, 0, 0, 0);
-    c1.setAttribute('title', a)
-    c2.setAttribute('title', b)
-    c3.setAttribute('title', c)
-    c4.setAttribute('title', d)
-    main.setAttribute('title', f)
+function colorDescription() {
+    let a = hexToRgbValue(mainColor.value, 46, 53, 43);
+    let b = hexToRgbValue(mainColor.value, -18, 28, -42);
+    let c = hexToRgbValue(mainColor.value, 60, 93, 43);
+    let d = hexToRgbValue(mainColor.value, -41, -6, -59);
+    let f = hexToRgbValue(mainColor.value, 0, 0, 0);
+    color1.setAttribute('title', a)
+    color2.setAttribute('title', b)
+    color3.setAttribute('title', c)
+    color4.setAttribute('title', d)
+    mainColor.setAttribute('title', f)
 }
 
-// главный блок в палетке
-mainColor.value = "#7109AA";
-// пишем главный цвет в консоль 
-console.log(hexToRgbValue(mainColor.value))
-// изменяем цвета смежных блоков палетки
-color1.style.backgroundColor = hexToRgbValue(mainColor.value, 46, 53, 43) ;
-color2.style.backgroundColor = hexToRgbValue(mainColor.value, -18, 28, -42);
-color3.style.backgroundColor = hexToRgbValue(mainColor.value, 60, 93, 43);
-color4.style.backgroundColor = hexToRgbValue(mainColor.value, -41, -6, -59);
-// изменяем цвета и названия блоков верхнего контейнера
-block1.style.backgroundColor = color1.style.backgroundColor;
-block2.style.backgroundColor = color2.style.backgroundColor;
-block3.style.backgroundColor = hexToRgbValue(mainColor.value, 0, 0, 0)
-block4.style.backgroundColor = color3.style.backgroundColor;
-block5.style.backgroundColor = color4.style.backgroundColor;
-name1.textContent = hexToRgbValue(mainColor.value, 46, 53, 43);
-name2.textContent = hexToRgbValue(mainColor.value, -18, 28, -42);
-name3.textContent = hexToRgbValue(mainColor.value, 0, 0, 0);
-name4.textContent = hexToRgbValue(mainColor.value, 60, 93, 43);
-name5.textContent = hexToRgbValue(mainColor.value, -41, -6, -59);
-
-colorDescription(mainColor, color1, color2, color3, color4);
-
-// смена цветов
-mainColor.addEventListener('input', function colorChange ()
-{
+//функция изменений цветов
+function colorsChange() {
     // пишем главный цвет в консоль 
     console.log(hexToRgbValue(mainColor.value))
-    //меняем блоки палетки 
-    color1.style.backgroundColor =  hexToRgbValue(mainColor.value, 46, 53, 43);
+    // изменяем цвета смежных блоков палетки
+    color1.style.backgroundColor = hexToRgbValue(mainColor.value, 46, 53, 43) ;
     color2.style.backgroundColor = hexToRgbValue(mainColor.value, -18, 28, -42);
     color3.style.backgroundColor = hexToRgbValue(mainColor.value, 60, 93, 43);
     color4.style.backgroundColor = hexToRgbValue(mainColor.value, -41, -6, -59);
-    //меняем содержимое верхнего контейнера
+    // изменяем цвета и названия блоков верхнего контейнера
     block1.style.backgroundColor = color1.style.backgroundColor;
     block2.style.backgroundColor = color2.style.backgroundColor;
     block3.style.backgroundColor = hexToRgbValue(mainColor.value, 0, 0, 0)
@@ -86,15 +60,27 @@ mainColor.addEventListener('input', function colorChange ()
     name3.textContent = hexToRgbValue(mainColor.value, 0, 0, 0);
     name4.textContent = hexToRgbValue(mainColor.value, 60, 93, 43);
     name5.textContent = hexToRgbValue(mainColor.value, -41, -6, -59);
+}
+
+// главный блок в палетке
+mainColor.value = "#7109AA";
+// изменяем цвета и добавляем подписи
+colorsChange();
+//переподписываем все цвета
+colorDescription();
+
+// смена цветов
+mainColor.addEventListener('input', function () {
+    // изменяем цвета и добавляем подписи
+    colorsChange();
     //переподписываем все цвета
-    colorDescription(mainColor, color1, color2, color3, color4);
+    colorDescription();
 })
 
-// Копирование названий цветов
+// копирование названий цветов
 block1.addEventListener('click', function ()
 {
     navigator.clipboard.writeText(name1.textContent)
-
 })
 block2.addEventListener('click', function ()
 {
@@ -113,37 +99,52 @@ block5.addEventListener('click', function ()
     navigator.clipboard.writeText(name5.textContent)
 })
 
-// // Функция для преобразования RGB в HEX
-// function rgbToHex(rgb) {
-//     const rgbArray = rgb.match(/\d+/g);
-//     return ((1 << 24) + (parseInt(rgbArray[0]) << 16) + (parseInt(rgbArray[1]) << 8) + parseInt(rgbArray[2])).toString(16).slice(1);
-// }
+// функция для преобразования HEX в RGB
+function rgbToHex(rgb) {
+    const rgbValues = rgb.match(/\d+/g); // Извлекаем числовые значения
+    const hex = rgbValues.map(value => {
+        const hexValue = parseInt(value).toString(16).padStart(2, '0'); // Конвертируем в hex и добавляем нули
+        return hexValue;
+    }).join('');
+    return `#${hex}`; // Возвращаем строку в формате #RRGGBB
+}
 
-// mainColor.value = rgbToHex(getComputedStyle(color1).backgroundColor);
+function updateMainColor(color) {
+    const backgroundColor = color.style.backgroundColor; // Получаем цвет фона
+    const hexColor = rgbToHex(backgroundColor); // Преобразуем в HEX
+    mainColor.value = hexColor; // Устанавливаем значение в input
+}
 
-// //
-// function componentToHex(comp) {
-//     var hex = comp.toString(16);
-//     return hex.length == 1 ? "0" + hex : hex;
-// }
-// function rgbToHex(r, g, b) {
-//     return #${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)};
-// }
+color1.addEventListener('click', function()
+{
+    updateMainColor(color1);
+    // изменяем цвета и добавляем подписи
+    colorsChange();
+    //переподписываем все цвета
+    colorDescription();
+});
 
-// //
-// color1.addEventListener('click', function()
-// {
-//     mainColor.value = rgbToHex(componentToHex(color1.style.backgroundColor));
-// })
-// color2.addEventListener('click', function()
-// {
-//     mainColor.value = color2.style.backgroundColor;
-// })
-// color3.addEventListener('click', function()
-// {
-//     mainColor.value = color3.style.backgroundColor;
-// })
-// color4.addEventListener('click', function()
-// {
-//     mainColor.value = color4.style.backgroundColor;
-// })
+color2.addEventListener('click', function()
+{
+    updateMainColor(color2);
+    // изменяем цвета и добавляем подписи
+    colorsChange();
+    //переподписываем все цвета
+    colorDescription();
+})
+color3.addEventListener('click', function()
+{
+    updateMainColor(color3);
+    // изменяем цвета и добавляем подписи
+    colorsChange();
+    //переподписываем все цвета
+    colorDescription();
+})
+color4.addEventListener('click', function()
+{
+    updateMainColor(color4);
+    // изменяем цвета и добавляем подписи
+    colorsChange();
+    //переподписываем все цвета
+    colorDescription();
+})
